@@ -213,14 +213,14 @@ public class StudentDAO {
 	
 	public int updateStudent(Student student) {
 		int result = 0;
-		String sql = "UPDATE STUDENT_TBL SET "
-				+ "STUDENT_PWD = '"+student.getStudentPwd()+"', "
-						+ "EMAIL = '"+student.getEmail()+"', "
-								+ "PHONE = '"+student.getPhone()+"', "
-										+ "ADDRESS = '"+student.getAddress()+"', "
-												+ "HOBBY = '"+student.getHobby()+"' "
-														+ "WHERE STUDENT_ID = '"+student.getStudentId()+"'";
-		//String sql = "UPDATE STUDENT_TBL SET STUDENT_PWD = '"+student.getStudentPwd()+"', EMAIL = '"+student.getEmail()+"', PHONE = '"+student.getPhone()+"', ADDRESS = '"+student.getAddress()+"', HOBBY = '"+student.getHobby()+"'WHERE STUDENT_ID ='"+student+"'";                  
+//		String sql = "UPDATE STUDENT_TBL SET "
+//				+ "STUDENT_PWD = '"+student.getStudentPwd()+"', "
+//						+ "EMAIL = '"+student.getEmail()+"', "
+//								+ "PHONE = '"+student.getPhone()+"', "
+//										+ "ADDRESS = '"+student.getAddress()+"', "
+//												+ "HOBBY = '"+student.getHobby()+"' "
+//														+ "WHERE STUDENT_ID = '"+student.getStudentId()+"'";
+		String sql = "UPDATE STUDENT_TBL SET STUDENT_PWD = '"+student.getStudentPwd()+"', EMAIL = '"+student.getEmail()+"', PHONE = '"+student.getPhone()+"', ADDRESS = '"+student.getAddress()+"', HOBBY = '"+student.getHobby()+"'WHERE STUDENT_ID ='"+student.getStudentId()+"'";                  
 		//"UPDATE STUDENT_TBL
 		//SET STUDENT_PWD = '"+뭐+"',
 		//    PHONE = '"+뭐+"',

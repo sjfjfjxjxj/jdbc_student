@@ -30,10 +30,21 @@ public class MemberController {
 	
 	public List<Member> printAllByName(String memberName) {
 		MemberDAO mDao = new MemberDAO();
-		List<Member> mList = mDao.selectAll();
+		List<Member> mList = mDao.selectAllByName(memberName);
 		return mList;
 	}
 	
+	public int removeMember(String memberId) {
+		MemberDAO mDao = new MemberDAO();
+		int result = mDao.deleteMember(memberId);
+		return result;
+	}
+	
+	public int modifyMember(Member member) {
+		MemberDAO mDao = new MemberDAO();
+		int result = mDao.updateMember(member); 
+		return result;
+	}
 	
 	
 }

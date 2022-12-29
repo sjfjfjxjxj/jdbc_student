@@ -79,9 +79,39 @@ public class MemberView {
     }
     
     
+    public void showOne(Member member) {
+    	System.out.println("아이디 : " + member.getMemberId());
+    	System.out.println("비밀번호 : " + member.getMemberPwd());
+    	System.out.println("이름 : " + member.getMemberName());
+    	System.out.println("성별 : " + member.getMemberGender());
+    	System.out.println("나이 : " + member.getMemberAge());
+    	System.out.println("이메일 : " + member.getMemberEmail());
+    	System.out.println("전화 : " + member.getMemberPhone());
+    	System.out.println("주소 : " + member.getMemberAddress());
+    	System.out.println("취미 : " + member.getMemberHobby());
+    }
     
     
-    
+    public Member modifyMember(Member member) {
+    	Scanner sc = new Scanner(System.in);
+    	System.out.println("수정할 비밀번호 입력: ");
+		String memberPwd = sc.next();
+		System.out.println("수정할 이메일 입력: ");
+		String memberEmail = sc.next();
+		System.out.println("수정할 전화번호 입력: ");
+		String memberPhone = sc.next();
+		System.out.println("수정할 주소 입력: ");
+		sc.nextLine();
+		String memberAddress = sc.nextLine();
+		System.out.println("수정할 취미 입력: ");
+		String memberHobby = sc.next();
+		member.setMemberPwd(memberPwd);
+		member.setMemberEmail(memberEmail);
+		member.setMemberPhone(memberPhone);
+		member.setMemberAddress(memberAddress);
+		member.setMemberHobby(memberHobby);
+		return member;
+    }
     
     
     

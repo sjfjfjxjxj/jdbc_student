@@ -104,9 +104,17 @@ public class MemberDAO {
 			//입력받은 정보 아이디로 꺼내와서 출력용으로 가공하자
 			if (rset.next()) {
 				member = new Member();
-				member.setMemberId(rset.getNString("STUDENT_ID"));
+				member.setMemberId(rset.getString("MEMBER_ID"));
+				member.setMemberPwd(rset.getString("MEMBER_PWD"));
+				member.setMemberName(rset.getString("MEMBER_NAME"));
+				member.setMemberGender(rset.getString("MEMBER_GENDER"));
+				member.setMemberAge(rset.getString("MEMBER_AGE"));
+				member.setMemberEmail(rset.getString("MEMBER_EMAIL"));
+				member.setMemberPhone(rset.getString("MEMBER_PHONE"));
+				member.setMemberAddress(rset.getString("MEMBER_ADDRESS"));
+				member.setMemberHobby(rset.getString("MEMBER_HOBBY"));
+				//얘는 택배상자!
 			}
-			
 			rset.close();
 			conn.close();
 			stmt.close();
@@ -118,9 +126,92 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 		return member;
-		
 	}
 	
+	public List<Member> selectAllByName(String memberName) {
+		List<Member> mList = null;
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String user = "student";
+		String password = "student";
+		String sql = "SELECT * FROM MEMBER_TBL WHERE STUDENT_NAME ='"+ memberName+"'";		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection conn = DriverManager.getConnection(url, user, password);
+			Statement stmt = conn.createStatement();
+			ResultSet rset = stmt.executeQuery(sql);
+			mList = new ArrayList<Member>();
+			while(rset.next()) {
+				Member member = new Member();
+				member.setMemberId(rset.getString("Member_ID"));
+				member.setMemberPwd(rset.getString("MEMBER_PWD"));
+				member.setMemberName(rset.getString("MEMBER_NAME"));
+				member.setMemberGender(rset.getString("MEMBER_GENDER"));
+				member.setMemberAge(rset.getString("MEMBER_AGE"));
+				member.setMemberEmail(rset.getString("MEMBER_EMAIL"));
+				member.setMemberPhone(rset.getString("MEMBER_PHONE"));
+				member.setMemberAddress(rset.getString("MEMBER_ADDRESS"));
+				member.setMemberHobby(rset.getString("MEMBER_HOBBY"));
+				mList.add(member); //얘는 택배차!
+				conn.close();
+				stmt.close();
+				rset.close();
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return mList;
+	}
 	
+	public int deleteMember(String memberId) {
+		int result = 0;
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String user = "student";
+		String password = "student";
+		String sql = "SELECT * DELETE MEMBER_TBL WHERE MEMBER_ID='"+memberId+"'";
+		try {
+			Class.forName("oracle.jdbc.driver.Oracledriver");
+			Connection conn = DriverManager.getConnection(url, user, password);
+			Statement stmt = conn.createStatement();
+			result = stmt.executeUpdate(sql);
+			
+			stmt.close();
+			conn.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int updateMember(Member member) {
+		int result = 0;
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String user = "student";
+		String password = "student";
+		String sql = "UPDATE MEMBER_TBL SET MEMBER_PWD = '"+member.getMemberPwd()+"', MEMBER_EMAIL = '"+member.getMemberEmail()+"', MEMBER_PHONE = '"+member.getMemberPhone()+"', MEMBER_ADDRESS = '"+member.getMemberAddress()+"', HOBBY = '"+member.getMemberHobby()+"'WHERE MEMBER_ID ='"+member.getMemberId()+"'";
+		try {
+			Class.forName("oracle.jdbc.driver.Oracledriver");
+			Connection conn = DriverManager.getConnection(url, user, password);
+			Statement stmt = conn.createStatement();
+			result = stmt.executeUpdate(sql);
+			
+			stmt.close();
+			conn.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 }
