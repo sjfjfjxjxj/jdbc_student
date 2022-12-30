@@ -5,7 +5,7 @@ public class Member {
     String memberPwd;
     String memberName;
     String memberGender;
-    String memberAge;
+    int memberAge;
     String memberEmail;
     String memberPhone;
     String memberAddress;
@@ -17,8 +17,13 @@ public class Member {
 		super();
 	}
 
-
-	public Member(String memberId, String memberPwd, String memberName, String memberGender, String memberAge,
+    public Member(String memberId, String memberPwd) {
+    	super();
+    	this.memberId = memberId;
+    	this.memberPwd = memberPwd;
+    }
+    
+	public Member(String memberId, String memberPwd, String memberName, String memberGender, int memberAge,
 			String memberEmail, String memberPhone, String memberAddress, String memberHobby, String memberDate) {
 		super();
 		this.memberId = memberId;
@@ -74,12 +79,12 @@ public class Member {
 	}
 
 
-	public String getMemberAge() {
+	public int getMemberAge() {
 		return memberAge;
 	}
 
 
-	public void setMemberAge(String memberAge) {
+	public void setMemberAge(int memberAge) {
 		this.memberAge = memberAge;
 	}
 

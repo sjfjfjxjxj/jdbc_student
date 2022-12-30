@@ -21,6 +21,7 @@ public class MemberView {
     	System.out.println("4. 회원 가입");
     	System.out.println("5. 회원 정보 수정");
     	System.out.println("6. 회원 탈퇴");
+    	System.out.println("7. 회원 로그인");
     	System.out.println("0. 프로그램 종료");
     	System.out.print("메뉴 선택 : ");
     	int choice = sc.nextInt();
@@ -43,6 +44,7 @@ public class MemberView {
     		System.out.println("주소:"+ mOne.getMemberAddress());
     		System.out.println("취미:"+ mOne.getMemberHobby());
     		System.out.println("가입일:"+ mOne.getMemberDate());
+    		System.out.println("----------------------------------------------");
     	}
     }
     
@@ -57,7 +59,7 @@ public class MemberView {
     	System.out.print("성별 : ");
     	String memberGender = sc.next();
     	System.out.print("나이 : ");
-    	String memberAge = sc.next();
+    	int memberAge = sc.nextInt();
     	System.out.print("이메일 : ");
     	String memberEmail = sc.next();
     	System.out.print("전화 : ");
@@ -78,6 +80,30 @@ public class MemberView {
     	return searchedStudent;
     }
     
+//    public Member inputLoginInfo(String memberId, String memberPwd) {
+//    	Scanner sc = new Scanner(System.in);
+//    	System.out.print("아이디 :");
+//    	String MemberId = sc.next();
+//    	System.out.print("비밀번호 :");
+//    	String MemberPwd = sc.next();
+//    	Member memberIdPwd = new Member(memberId, memberPwd);
+//    	return memberIdPwd; //컨트롤러로 가
+//    }
+    
+    //선생님 로그인
+    public Member inputLoginInfo() {
+    	Scanner sc = new Scanner(System.in);
+    	System.out.println("-----로그인정보입력-------");
+    	System.out.print("아이디 :");
+    	String memberId = sc.next();
+    	System.out.print("비밀번호 :");
+    	String memberPwd = sc.next();
+        Member member= new Member();
+        member.setMemberId(memberId);
+        member.setMemberPwd(memberPwd);
+        return member;
+    }
+    
     
     public void showOne(Member member) {
     	System.out.println("아이디 : " + member.getMemberId());
@@ -94,16 +120,16 @@ public class MemberView {
     
     public Member modifyMember(Member member) {
     	Scanner sc = new Scanner(System.in);
-    	System.out.println("수정할 비밀번호 입력: ");
+    	System.out.print("수정할 비밀번호 입력: ");
 		String memberPwd = sc.next();
-		System.out.println("수정할 이메일 입력: ");
+		System.out.print("수정할 이메일 입력: ");
 		String memberEmail = sc.next();
-		System.out.println("수정할 전화번호 입력: ");
+		System.out.print("수정할 전화번호 입력: ");
 		String memberPhone = sc.next();
-		System.out.println("수정할 주소 입력: ");
+		System.out.print("수정할 주소 입력: ");
 		sc.nextLine();
 		String memberAddress = sc.nextLine();
-		System.out.println("수정할 취미 입력: ");
+		System.out.print("수정할 취미 입력: ");
 		String memberHobby = sc.next();
 		member.setMemberPwd(memberPwd);
 		member.setMemberEmail(memberEmail);
@@ -127,12 +153,12 @@ public class MemberView {
     
     
     public void displaySuccess(String msg) {
-    	System.out.println("성공이요"+ msg);
+    	System.out.println("성공이요 : "+ msg);
     }
     
     
     public void displayError(String msg) {
-    	System.out.println("실패요"+ msg);
+    	System.out.println("실패요 : "+ msg);
     }
     
 }

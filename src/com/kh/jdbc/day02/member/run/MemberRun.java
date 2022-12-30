@@ -12,6 +12,7 @@ public class MemberRun {
     	MemberController mCon = new MemberController();
     	MemberView mView = new MemberView();
     	int result = 0;
+    	String memberPwd ="";
     	String memberId = "";
     	String memberName ="";
     	Member member = null; //초기화!
@@ -57,7 +58,7 @@ public class MemberRun {
     			}
     			break;
     		case 5 : //수정!
-    			memberId = mView.searchMember("수정할 아이디를");
+    			memberId = mView.searchMember("정보 수정할 회원의 아이디를");
     			member = mCon.printOneById(memberId);//아이디로 아이디주인정보빼오기
     			if(member != null) {
     				member = mView.modifyMember(member);
@@ -75,8 +76,17 @@ public class MemberRun {
     				mView.displayError("너는 벗어날 수 없다");
     			}
     			break;
+    		case 7 : //로그인하기
+    			Member memberIdPwd = mView.inputLoginInfo();
+    			result = mCon.CheckInfo(memberIdPwd);
+    			if(result > 0 ) {
+    				mView.displaySuccess("로그인 성공!");
+    			}else {
+    				mView.displayError("아이디와 비밀번호를 제대로 입력해주세요");
+    			}
+    			break;
     		default :
-    			mView.printMessage("1~6 사이 숫자를 입력하시오");
+    			mView.printMessage("1~7 사이 숫자를 입력하시오");
     			break;
     		}
     	}
