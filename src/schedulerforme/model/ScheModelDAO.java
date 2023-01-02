@@ -91,6 +91,7 @@ public class ScheModelDAO {
 			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, scheDate);
+			scheList = new ArrayList<Schedule>();
 			ResultSet rset = pstmt.executeQuery();
 			while(rset.next()) {
 				Schedule schedule = new Schedule();   

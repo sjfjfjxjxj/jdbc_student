@@ -30,6 +30,14 @@ public class MemberService {
     	return mList;
     }
 	
+	public List<Member> selectAllByName(String memberName) {
+		List<Member> mList = null;
+		Connection conn = jdbcTemplate.getConnection();
+		mList = mDao.selectAllByName(conn, memberName);
+		return mList;
+	}
+	
+	
 	public Member selectOneById(String memberId) {
 	    Connection conn = jdbcTemplate.getConnection();
 	    Member member = mDao.selectOneById(conn,memberId);
@@ -63,5 +71,16 @@ public class MemberService {
 		jdbcTemplate.close(conn);
 		return result;
 	}
+
+	public int dropMember(String memberId) {
+		Connection conn = jdbcTemplate.getConnection();
+		int result = mDao.dropMember(conn, memberId);
+		if(result > 0) {
+			jdbcTemplate.commit(conn);
+		}
+		jdbcTemplate.rollback(conn);
+		return result;
+	}
+
 
 }

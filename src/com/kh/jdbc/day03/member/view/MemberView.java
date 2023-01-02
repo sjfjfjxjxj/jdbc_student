@@ -136,6 +136,11 @@ public class MemberView {
 		return member;
     }
     
+    public Member deleteMember(String memberId) {
+    	Member member = new Member();
+    	member.setMemberId(memberId);
+    	return member;
+    }
     
     
     

@@ -12,17 +12,46 @@ import java.util.List;
 import com.kh.jdbc.day03.member.model.vo.Member;
 
 public class MemberDAO {
-    
-	
-	public List<Member> selectAll(Connection conn){
+
+	public List<Member> selectAll(Connection conn) {
 		List<Member> mList = null;
-		String sql ="SELECT * FROM MEMBER_TBL";
+		String sql = "SELECT * FROM MEMBER_TBL";
 		try {
-			
+
 			Statement stmt = conn.createStatement();
 			ResultSet rset = stmt.executeQuery(sql);
 			mList = new ArrayList<Member>();
-			while(rset.next()) {
+			while (rset.next()) {
+				Member member = new Member();
+				member.setMemberId(rset.getString("MEMBER_ID"));
+				member.setMemberPwd(rset.getString("MEMBER_PWD"));
+				member.setMemberName(rset.getString("MEMBER_NAME"));
+				member.setMemberAge(rset.getInt("MEMBER_AGE"));
+				member.setMemberEmail(rset.getString("MEMBER_EMAIL"));
+				member.setMemberPhone(rset.getString("MEMBER_PHONE"));
+				member.setMemberGender(rset.getString("MEMBER_GENDER"));
+				member.setMemberHobby(rset.getString("MEMBER_HOBBY"));
+				member.setMemberAddress(rset.getString("MEMBER_ADDRESS"));
+				member.setMemberDate(rset.getTimestamp("MEMBER_DATE"));
+				mList.add(member);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mList;
+	}
+
+	public List<Member> selectAllByName(Connection conn, String memberName) {
+		String sql = "SELECT * FROM MEMBER_TBL WHERE MEMBER_NAME = ?";
+		List<Member> mList = null;
+		PreparedStatement pstmt;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberName);
+			ResultSet rset = pstmt.executeQuery();
+			mList = new ArrayList();
+			while (rset.next()) {
 				Member member = new Member();
 				member.setMemberId(rset.getString("MEMBER_ID"));
 				member.setMemberPwd(rset.getString("MEMBER_PWD"));
@@ -36,19 +65,20 @@ public class MemberDAO {
 				member.setMemberDate(rset.getTimestamp("MEMBER_DATE"));
 				mList.add(member);
 			}
-		}  catch (SQLException e) {
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return mList;
 	}
-	
+
 	
 	public int insertMember(Connection conn, Member member) {
-		//Class.forname();
-		//Connection conn = DriverManager...
+		// Class.forname();
+		// Connection conn = DriverManager...
 		int result = 0;
-	
-		String sql = "INSERT INTO MEMBER_TBL VALUES(?,?,?,?,?,?,?,?,?,,DEFAULT)";
+
+		String sql = "INSERT INTO MEMBER_TBL VALUES(?,?,?,?,?,?,?,?,?,DEFAULT)";
 		PreparedStatement pstmt;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -62,19 +92,19 @@ public class MemberDAO {
 			pstmt.setString(8, member.getMemberAddress());
 			pstmt.setString(9, member.getMemberHobby());
 			result = pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
 	}
-	
-	
+
 	public int updateMember(Connection conn, Member member) {
-		//UPDATE MEMBER_TBL SET MEMBER_PWD=?, MEMBER_EMAIL=?, MEMBER_PHONE=?, MEMBER_ADDRESS=?, MEMBER_HOBBY=? WHERE MEMBER_ID =?
-		//Class.forName();
-		//Connection conn =~~~ --->템플릿에 다 만들어놓음
+		// UPDATE MEMBER_TBL SET MEMBER_PWD=?, MEMBER_EMAIL=?, MEMBER_PHONE=?,
+		// MEMBER_ADDRESS=?, MEMBER_HOBBY=? WHERE MEMBER_ID =?
+		// Class.forName();
+		// Connection conn =~~~ --->템플릿에 다 만들어놓음
 		int result = 0;
 		String sql = "UPDATE MEMBER_TBL SET MEMBER_PWD=?, MEMBER_EMAIL=?, MEMBER_PHONE=?, MEMBER_ADDRESS=?, MEMBER_HOBBY=? WHERE MEMBER_ID =?";
 		try {
@@ -91,18 +121,17 @@ public class MemberDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return result; 
+		return result;
 	}
-
 
 	public Member selectOneById(Connection conn, String memberId) {
 		String sql = "SELECT * FROM MEMBER_TBL WHERE MEMBER_ID = ?";
 		Member member = null;
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setNString(1, memberId);
+			pstmt.setString(1, memberId);
 			ResultSet rset = pstmt.executeQuery();
-			if(rset.next()) {
+			if (rset.next()) {
 				member = new Member();
 				member.setMemberId(rset.getString("MEMBER_ID"));
 				member.setMemberPwd(rset.getString("MEMBER_PWD"));
@@ -123,6 +152,21 @@ public class MemberDAO {
 		}
 		return member;
 	}
+
 	
-	
+	public int dropMember(Connection conn, String memberId) {
+		String sql = "DELETE FROM MEMBER_TBL WHERE MEMBER_ID = ?";
+		int result = 0;
+		PreparedStatement pstmt;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }
