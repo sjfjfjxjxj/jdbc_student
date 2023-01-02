@@ -42,7 +42,7 @@ public class MemberRun {
     		case 3 : // 이름 받아서 검색하기
     			memberName = mView.searchMember("검색할 이름을");
     			mList = mCon.printAllByName(memberName);
-    			if(!mList.isEmpty()) {
+    			if(mList.size() > 0) { //!mList.isEmpty()
     				mView.showAll(mList);
     			}else {
     				mView.displayError("그런 애 없어..");
@@ -61,8 +61,13 @@ public class MemberRun {
     			memberId = mView.searchMember("정보 수정할 회원의 아이디를");
     			member = mCon.printOneById(memberId);//아이디로 아이디주인정보빼오기
     			if(member != null) {
-    				member = mView.modifyMember(member);
-    				mCon.modifyMember(member);
+    				member = mView.modifyMember(memberId);
+    				result = mCon.modifyMember(member);
+    				if (result > 0) {
+    					mView.displaySuccess("수정 성공!");
+    				}else {
+    					mView.displayError("수정이 안됐어...");
+    				}
     			}else {
     				mView.displayError("그런 아이디 못찾겠어...");
     			}

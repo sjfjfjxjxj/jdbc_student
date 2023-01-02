@@ -81,7 +81,6 @@ public class ScheModelDAO {
 	
 	
 	public List<Schedule> loadSome(int scheDate) {
-		Schedule schedule = null;
 		List<Schedule> scheList = null;
 		String sql = "SELECT * FROM SCHEDULER_TBL WHERE SCHE_DEADLINE = ?";
 		//SELECT *
@@ -93,14 +92,14 @@ public class ScheModelDAO {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, scheDate);
 			ResultSet rset = pstmt.executeQuery();
-			if(rset.next()) {
-				schedule = new Schedule();   
-				schedule.setScheTitle(rset.getNString(1));
+			while(rset.next()) {
+				Schedule schedule = new Schedule();   
+				schedule.setScheTitle(rset.getString(1));
 				schedule.setScheDeadline(rset.getInt(2));
-				schedule.setScheOfficialCheck(rset.getNString(3));
-				schedule.setScheTodo(rset.getNString(4));
-				schedule.setScheWithWhom(rset.getNString(5));
-				schedule.setScheToWhere(rset.getNString(6));
+				schedule.setScheOfficialCheck(rset.getString(3));
+				schedule.setScheTodo(rset.getString(4));
+				schedule.setScheWithWhom(rset.getString(5));
+				schedule.setScheToWhere(rset.getString(6));
 				schedule.setScheSysdate(rset.getString(7));
 				scheList.add(schedule);
 			}

@@ -1,9 +1,9 @@
-package com.kh.jdbc.day03.citizen.view;
+package kom.kh.jdbc.day03.citizen.view;
 
 import java.util.List;
 import java.util.Scanner;
 
-import com.kh.jdbc.day03.citizen.model.vo.Citizen;
+import kom.kh.jdbc.day03.citizen.model.vo.Citizen;
 
 public class CitizenView {
 

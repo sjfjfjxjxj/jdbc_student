@@ -1,4 +1,4 @@
-package com.kh.jdbc.day03.citizen.model.dao;
+package kom.kh.jdbc.day03.citizen.model.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kh.jdbc.day03.citizen.model.vo.Citizen;
+import kom.kh.jdbc.day03.citizen.model.vo.Citizen;
 
 public class CitizenDAO {
 	String URL = "jdbc:oracle:thin:@localhost:1521:xe";

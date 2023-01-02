@@ -1,4 +1,4 @@
-package com.kh.jdbc.day02.member.model.vo;
+package com.kh.jdbc.day03.member.model.vo;
 
 import java.sql.Timestamp;
 

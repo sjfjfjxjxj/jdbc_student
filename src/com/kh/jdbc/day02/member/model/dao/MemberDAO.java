@@ -43,7 +43,7 @@ public class MemberDAO {
 				member.setMemberPhone(rset.getString("MEMBER_PHONE"));
 				member.setMemberAddress(rset.getString("MEMBER_ADDRESS"));
 				member.setMemberHobby(rset.getString("MEMBER_HOBBY"));
-				member.setMemberDate(rset.getString("MEMBER_DATE"));
+				member.setMemberDate(rset.getTimestamp("MEMBER_DATE"));
 				//
 				sList.add(member); //전부다 꺼냈으면 실어 옮겨
 			}
@@ -116,16 +116,18 @@ public class MemberDAO {
 	
 	public Member selectOneById(String memberId) {
 		Member member = null;
-		String sql = "SELECT * FROM MEMBER_TBL WHERE MEMBER_ID ='"+ memberId+"'";
+		String sql = "SELECT * FROM MEMBER_TBL WHERE MEMBER_ID = ? ";
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			Statement stmt = conn.createStatement();
-			ResultSet rset = stmt.executeQuery(sql);
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			ResultSet rset = pstmt.executeQuery();
 			//입력받은 정보 아이디로 꺼내와서 출력용으로 가공하자
 			if (rset.next()) {
 				member = new Member();
 				member.setMemberId(rset.getString("MEMBER_ID"));
+				//member.setMemberId(rset.getString(1)); 컬럼 순서 알면 숫자로 써도됑
 				member.setMemberPwd(rset.getString("MEMBER_PWD"));
 				member.setMemberName(rset.getString("MEMBER_NAME"));
 				member.setMemberGender(rset.getString("MEMBER_GENDER"));
@@ -134,11 +136,12 @@ public class MemberDAO {
 				member.setMemberPhone(rset.getString("MEMBER_PHONE"));
 				member.setMemberAddress(rset.getString("MEMBER_ADDRESS"));
 				member.setMemberHobby(rset.getString("MEMBER_HOBBY"));
-				//얘는 택배상자!
+				member.setMemberDate(rset.getTimestamp("MEMBER_DATE"));
+				//얘는 택배상자!(프라이머리키는 유니크하니깐 하나바껭없응게)
 			}
 			rset.close();
 			conn.close();
-			stmt.close();
+			pstmt.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -151,15 +154,16 @@ public class MemberDAO {
 	
 	public List<Member> selectAllByName(String memberName) {
 		List<Member> mList = null;
-		String sql = "SELECT * FROM MEMBER_TBL WHERE MEMBER_NAME ='"+ memberName+"'";		
-		try {
+		String sql = "SELECT * FROM MEMBER_TBL WHERE MEMBER_NAME LIKE ? ";		
+		try {                                                //이름이 확실치 않을때 라이크랑 와일드카드로!
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			Statement stmt = conn.createStatement();
-			ResultSet rset = stmt.executeQuery(sql);
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+memberName+"%"); //실행 준비!
+			ResultSet rset = pstmt.executeQuery();
 			mList = new ArrayList<Member>();
-			while(rset.next()) {
-				Member member = new Member();
+			while(rset.next()) {//리절트셋에 있는거 그대로 못쓰니까 맵핑해주는거래(후처리)
+				Member member = new Member(); 
 				member.setMemberId(rset.getString("Member_ID"));
 				member.setMemberPwd(rset.getString("MEMBER_PWD"));
 				member.setMemberName(rset.getString("MEMBER_NAME"));
@@ -172,7 +176,7 @@ public class MemberDAO {
 				mList.add(member); //얘는 택배차!
 			}
 			conn.close();
-			stmt.close();
+			pstmt.close();
 			rset.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -193,7 +197,7 @@ public class MemberDAO {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setNString(1, memberId);
+			pstmt.setString(1, memberId);
 			//↑준비
 			result = pstmt.executeUpdate();
 			//↑실행
@@ -209,14 +213,21 @@ public class MemberDAO {
 	
 	public int updateMember(Member member) {
 		int result = 0;
-		String sql = "UPDATE MEMBER_TBL SET MEMBER_PWD = '"+member.getMemberPwd()+"', MEMBER_EMAIL = '"+member.getMemberEmail()+"', MEMBER_PHONE = '"+member.getMemberPhone()+"', MEMBER_ADDRESS = '"+member.getMemberAddress()+"', MEMBER_HOBBY = '"+member.getMemberHobby()+"'WHERE MEMBER_ID ='"+member.getMemberId()+"'";
+		String sql = "UPDATE MEMBER_TBL SET MEMBER_PWD = ?, MEMBER_EMAIL =?, MEMBER_PHONE = ?, MEMBER_ADDRESS = ?, MEMBER_HOBBY = ? WHERE MEMBER_ID =?";
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			Statement stmt = conn.createStatement();
-			result = stmt.executeUpdate(sql);
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, member.getMemberPwd());
+			pstmt.setString(2, member.getMemberEmail());
+			pstmt.setString(3, member.getMemberPhone());
+			pstmt.setString(4, member.getMemberAddress());
+			pstmt.setString(5, member.getMemberHobby());
+			pstmt.setString(6, member.getMemberId());
 			
-			stmt.close();
+			result = pstmt.executeUpdate();
+			
+			pstmt.close();
 			conn.close();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

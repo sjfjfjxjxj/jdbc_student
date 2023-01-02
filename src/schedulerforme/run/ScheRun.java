@@ -21,7 +21,12 @@ public class ScheRun {
     		switch(choice) {
     		case 1 : //전체 스케줄 보기
     			scheList = scheCon.accessAll();
+    			if(!scheList.isEmpty()) {
+    			scheView.printSuccess("총 "+ scheList.size() +"건의 일정이 있어요.");
     			scheView.showAll(scheList);
+    			}else {
+    				scheView.printFail("아직 등록된 일정이 없어요.");
+    			}
     			break;
     		case 2 : //날짜별 스케줄 보기 
     			insertDate = scheView.searchSche("일정이 궁금한 날짜 입력해주세요(yyyymmdd) :"); //날짜를 입력받아서

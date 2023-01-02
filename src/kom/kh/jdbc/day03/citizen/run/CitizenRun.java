@@ -1,10 +1,10 @@
-package com.kh.jdbc.day03.citizen.run;
+package kom.kh.jdbc.day03.citizen.run;
 
 import java.util.List;
 
-import com.kh.jdbc.day03.citizen.controller.CitizenController;
-import com.kh.jdbc.day03.citizen.model.vo.Citizen;
-import com.kh.jdbc.day03.citizen.view.CitizenView;
+import kom.kh.jdbc.day03.citizen.controller.CitizenController;
+import kom.kh.jdbc.day03.citizen.model.vo.Citizen;
+import kom.kh.jdbc.day03.citizen.view.CitizenView;
 
 public class CitizenRun {
     public static void main(String [] args) {

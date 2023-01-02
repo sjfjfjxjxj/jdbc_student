@@ -35,7 +35,7 @@ public class ScheView {
 	}
 	
 	public void showAll(List<Schedule> scheList) {
-		System.out.println("------------나의 전체 일정 조회------------");
+		System.out.println("------------나의 전체/검색된(나중에바꿔ㄱ) 일정 조회------------");
 		for(Schedule singleSche : scheList) {
 			System.out.println("일정 제목: " + singleSche.getScheTitle());
 			System.out.print("☆ "+singleSche.getScheDeadline());
@@ -44,6 +44,7 @@ public class ScheView {
 			System.out.print("【"+singleSche.getScheWithWhom()+"】(이)랑 ");
 			System.out.println("【"+singleSche.getScheToWhere()+"】에서 할 예정이에요.");
 			System.out.println("기록:" +singleSche.getScheSysdate());
+			System.out.println("------♪------♪------");
 		}
 	}
 	
@@ -91,12 +92,12 @@ public class ScheView {
 	
 	
 	public String printSuccess(String msg) {
-		System.out.println("[성공] : " + msg);
+		System.out.println("[☆성공☆] : " + msg);
 		return msg;
 	}
 	
 	public String printFail(String msg) {
-		System.out.println("[오류] : " + msg);
+		System.out.println("[오류발생] : " + msg);
 		return msg;
 	}
 	
