@@ -24,11 +24,10 @@ public class ScheView {
 		System.out.println("2. 날짜별 일정 보기");
 		System.out.println("3. 『개인』일정만 보기");
 		System.out.println("4. 『공식』일정만 보기");
-		System.out.println("5. 시간 순서로 일정 보기");
-		System.out.println("6. 새 일정 추가하기");
-		System.out.println("7. 일정 수정하기");
-		System.out.println("8. 일정 삭제하기");
-		System.out.println("9. 프로그램 종료");
+		System.out.println("5. 새 일정 추가하기");
+		System.out.println("6. 일정 수정하기");
+		System.out.println("7. 일정 삭제하기");
+		System.out.println("8. 프로그램 종료");
 		System.out.print("[메뉴선택] : ");
 		int choice = sc.nextInt();
 		return choice;
@@ -48,7 +47,11 @@ public class ScheView {
 		}
 	}
 	
-	
+	/**
+	 * 날짜별 보기
+	 * @param msg
+	 * @return
+	 */
 	public int searchSche(String msg) {
 		Scanner sc = new Scanner(System.in);
 		System.out.print(msg);
@@ -56,22 +59,51 @@ public class ScheView {
 		return deadline;
 	}
 	
+	public String searchPrivateOfficial(String msg) {
+		System.out.println("--------【"+msg+"】 일정 보기--------");
+		return msg;
+	}
+
+	/**
+	 * 수정/삭제용 일정 제목 받기
+	 * @param msg
+	 * @return
+	 */
+	public String searchTitle(String msg) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println(msg+"하고싶은 일정의 제목을 입력해주세요 :");
+		String scheTitle = sc.next();
+		return scheTitle;
+	}
+	
+	public Schedule modifySche(String insertTitle) {
+		Schedule schedule = new Schedule();
+		Scanner sc = new Scanner(System.in);
+		System.out.print("수정할 날짜 입력:");
+		schedule.setScheDate() = sc.nextInt();
+		System.out.print("공식/비공식 여부 수정:");
+		System.out.print("할 일 수정:");
+		System.out.print("같이 할 사람 수정:");
+		System.out.print("할 장소 수정:");
+		return schedule;
+	}
 	
 	
 	public Schedule insertSche() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("------------나의 일정 입력하기------------");
-		System.out.println("일정 제목이 뭔가요? : ");
+		System.out.println("띄어쓰기 없이 입력해주세요!!"); //아 왜 띄어쓰기하면 에러나냐 힝입니다
+		System.out.print("일정 제목이 뭔가요? : ");
 		String scheTitle = sc.next();
-		System.out.println("그게 언제죠?(yyyymmdd 입력) : ");
+		System.out.print("그게 언제죠?(yyyymmdd 입력) : ");
 		int scheDeadline = sc.nextInt();
-		System.out.println("공식/개인 여부를 알려주세요 : ");
+		System.out.print("공식/개인 여부를 알려주세요 : ");
 		String scheOfficialCheck = sc.next();
-		System.out.println("무엇을 하나요? : ");
+		System.out.print("무엇을 하나요? : ");
 		String scheTodo = sc.next();
-		System.out.println("누구랑 할 건가요?(혼자라면 '나'라고 입력해주세요) : ");
+		System.out.print("누구랑 할 건가요?(혼자라면 '나'라고 입력해주세요) : ");
 		String scheWithWhom = sc.next();
-		System.out.println("어디서 할 건가요? : ");
+		System.out.print("어디서 할 건가요? : ");
 		String scheToWhere = sc.next();
 		Schedule schedule = new Schedule(scheTitle, scheDeadline, scheOfficialCheck, scheTodo, scheWithWhom, scheToWhere, null);
 		return schedule;
@@ -97,9 +129,10 @@ public class ScheView {
 	}
 	
 	public String printFail(String msg) {
-		System.out.println("[오류발생] : " + msg);
+		System.out.println("[실패!] : " + msg);
 		return msg;
 	}
+
 	
 	
 }
