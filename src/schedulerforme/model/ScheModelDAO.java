@@ -15,6 +15,10 @@ public class ScheModelDAO {
 	private final String PASSWORD = "student";
 	private final String DRIVER_NAME = "oracle.jdbc.driver.OracleDriver";
 
+	/**
+	 * 전체스케줄 보기. 일자 오름차순
+	 * @return List<Schedule> scheList
+	 */
 	public List<Schedule> loadAll() {
 		List<Schedule> scheList = null;
 		Schedule schedule = null;
@@ -48,10 +52,14 @@ public class ScheModelDAO {
 		return scheList;
 	}
 	
-	
+	/**
+	 * 일정제목으로 찾기->수정/삭제용으로 넘길 것
+	 * @param insertTitle
+	 * @return Schedule schedule
+	 */
 	public Schedule loadOneSche(String insertTitle) {
 		String sql = "SELECT * FROM SCHEDULER_TBL WHERE SCHE_TITLE =?";
-		Schedule schedule = new Schedule();
+		Schedule schedule = null;
 		try {
 			Class.forName(DRIVER_NAME);
 			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -69,6 +77,9 @@ public class ScheModelDAO {
 				schedule.setScheSysdate(rset.getString(7));
 				
 			}
+			rset.close();
+			conn.close();
+			pstmt.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,7 +92,11 @@ public class ScheModelDAO {
 	
 	
 	
-
+/**
+ * 특정일자 일정(들) 출력하기
+ * @param scheDate
+ * @return List<Schedule> scheList
+ */
 	public List<Schedule> loadSome(int scheDate) {
 		List<Schedule> scheList = null;
 		String sql = "SELECT * FROM SCHEDULER_TBL WHERE SCHE_DEADLINE = ?";
@@ -119,10 +134,10 @@ public class ScheModelDAO {
 	}
 
 	/**
-	 * 공식비공식
+	 * 공식/비공식 카테고리로 출력
 	 * 
 	 * @param privateOfficial
-	 * @return
+	 * @return List<Schedule> schedule
 	 */
 	public List<Schedule> loadSches(String privateOfficial) {
 		List<Schedule> scheList = null;
@@ -160,7 +175,7 @@ public class ScheModelDAO {
 	/**
 	 * 새스케줄저장
 	 * @param schedule
-	 * @return
+	 * @return int result
 	 */
 	public int upLoadOne(Schedule schedule) {
 		String sql = "INSERT INTO SCHEDULER_TBL VALUES(?,?,?,?,?,?,DEFAULT)";
@@ -179,8 +194,6 @@ public class ScheModelDAO {
 	
 			result = pstmt.executeUpdate();
 	
-			conn.close();
-			pstmt.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -192,8 +205,13 @@ public class ScheModelDAO {
 	
 	}
 
+	/**
+	 * 일정제목 받아서 일정 수정
+	 * @param schedule
+	 * @return int result
+	 */
 	public int replaceSche(Schedule schedule) {
-		String sql = "UPDATE SCHEDULER_TBL SET SCHE_DEADLINE=?, SCHE_OFFICIALCHECK=?, SCHE_TODO=?, SCHE_WITHWHOM=?, SCHE_TOWHERE=?";
+		String sql = "UPDATE SCHEDULER_TBL SET SCHE_DEADLINE=?, SCHE_OFFICIALCHECK=?, SCHE_TODO=?, SCHE_WITHWHOM=?, SCHE_TOWHERE=? WHERE SCHE_TITLE= ?";
 		int result = 0;
 		try {
 			Class.forName(DRIVER_NAME);
@@ -204,6 +222,11 @@ public class ScheModelDAO {
 			pstmt.setString(3, schedule.getScheTodo());
 			pstmt.setString(4, schedule.getScheWithWhom());
 			pstmt.setString(5, schedule.getScheToWhere());
+			pstmt.setString(6, schedule.getScheTitle());
+			result = pstmt.executeUpdate();
+			
+			pstmt.close();
+			conn.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -211,7 +234,33 @@ public class ScheModelDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return 0;
+		return result;
+	}
+
+
+	/**
+	 * 일정제목 받아서 일정 삭제
+	 * @param scheTitle
+	 * @return int result
+	 */
+	public int dropSche(String scheTitle) {
+		int result = 0;
+		String sql = "DELETE FROM SCHEDULER_TBL WHERE SCHE_TITLE = ?";
+		try {
+			Class.forName(DRIVER_NAME);
+			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, scheTitle);
+			result = pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 

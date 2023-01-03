@@ -33,8 +33,8 @@ public class ScheView {
 		return choice;
 	}
 	
-	public void showAll(List<Schedule> scheList) {
-		System.out.println("------------나의 전체/검색된(나중에바꿔ㄱ) 일정 조회------------");
+	public void showAll(List<Schedule> scheList, String msg) {
+		System.out.println("------------"+ msg +" 일정 조회------------");
 		for(Schedule singleSche : scheList) {
 			System.out.println("일정 제목: " + singleSche.getScheTitle());
 			System.out.print("☆ "+singleSche.getScheDeadline());
@@ -79,12 +79,17 @@ public class ScheView {
 	public Schedule modifySche(String insertTitle) {
 		Schedule schedule = new Schedule();
 		Scanner sc = new Scanner(System.in);
+		schedule.setScheTitle(insertTitle);
 		System.out.print("수정할 날짜 입력:");
-		schedule.setScheDate() = sc.nextInt();
-		System.out.print("공식/비공식 여부 수정:");
+		schedule.setScheDeadline(sc.nextInt()); 
+		System.out.print("공식/개인 여부 수정:");
+		schedule.setScheOfficialCheck(sc.next());
 		System.out.print("할 일 수정:");
+		schedule.setScheTodo(sc.next());
 		System.out.print("같이 할 사람 수정:");
+		schedule.setScheWithWhom(sc.next());
 		System.out.print("할 장소 수정:");
+		schedule.setScheToWhere(sc.next());
 		return schedule;
 	}
 	

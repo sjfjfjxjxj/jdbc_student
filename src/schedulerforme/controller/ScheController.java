@@ -13,6 +13,14 @@ public class ScheController {
 		return scheList;
 	}
 	
+	
+	public Schedule printOneSche(String insertTitle) {
+		ScheModelDAO scheDao = new ScheModelDAO();
+		Schedule schedule = scheDao.loadOneSche(insertTitle);
+		return schedule;
+	}
+	
+	
 	public List<Schedule> checkDate(int scheDate) {
 		ScheModelDAO scheDao = new ScheModelDAO();
 		List<Schedule> scheList = scheDao.loadSome(scheDate);
@@ -27,26 +35,25 @@ public class ScheController {
 	}
 	
 	
-	
 	public int saveSche(Schedule schedule) {
 		ScheModelDAO scheDao = new ScheModelDAO();
 		int result = scheDao.upLoadOne(schedule);
 		return result;
 	}
 	
-	
 
-
-	public int modifySche(String insertTitle) {
+	public int modifySche(Schedule schedule) {
 		ScheModelDAO scheDao = new ScheModelDAO();
-		int result = scheDao.replaceSche(insertTitle);
+		int result = scheDao.replaceSche(schedule);
 		return result;
 	}
 
-	public Schedule printOneSche(String insertTitle) {
+	
+	public int deleteSche(String scheTitle) {
 		ScheModelDAO scheDao = new ScheModelDAO();
-		Schedule schedule = scheDao.loadOneSche(insertTitle);
-		return schedule;
+		int result = scheDao.dropSche(scheTitle);
+		return result;
 	}
 	
+
 }

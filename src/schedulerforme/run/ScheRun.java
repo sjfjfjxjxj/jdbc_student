@@ -2,7 +2,6 @@ package schedulerforme.run;
 
 import java.util.List;
 
-import javax.swing.text.View;
 
 import schedulerforme.controller.ScheController;
 import schedulerforme.model.Schedule;
@@ -26,7 +25,7 @@ public class ScheRun {
     			scheList = scheCon.accessAll();
     			if(!scheList.isEmpty()) {
     			scheView.printSuccess("총 "+ scheList.size() +"건의 일정이 있어요.");
-    			scheView.showAll(scheList);
+    			scheView.showAll(scheList, "나의 전체");
     			}else {
     				scheView.printFail("아직 등록된 일정이 없어요.");
     			}
@@ -36,7 +35,7 @@ public class ScheRun {
     			scheList = scheCon.checkDate(insertDate);
     			if(!scheList.isEmpty()) {
     				scheView.printSuccess("총 "+ scheList.size() +"건의 일정이 있어요.");
-    				scheView.showAll(scheList);
+    				scheView.showAll(scheList, "검색된 날짜의");
     			}else {
     				scheView.printFail(insertDate + "에는 아무 일정도 없어요.");
     			}
@@ -46,7 +45,7 @@ public class ScheRun {
     			scheList = scheCon.checkPrivate(privateOfficial);
     			if(!scheList.isEmpty()) {
     				scheView.printSuccess("총 "+ scheList.size() +"건의 일정이 있어요.");
-    				scheView.showAll(scheList);
+    				scheView.showAll(scheList, "나의 개인");
     			}else {
     				scheView.printFail("아직 아무 개인 일정도 없어요.");
     			}
@@ -56,7 +55,7 @@ public class ScheRun {
     			scheList = scheCon.checkPrivate(privateOfficial);
     			if(!scheList.isEmpty()) {
     				scheView.printSuccess("총 "+ scheList.size() +"건의 일정이 있어요.");
-    				scheView.showAll(scheList);
+    				scheView.showAll(scheList, "나의 공식");
     			}else {
     				scheView.printFail("아직 아무 공식 일정도 없어요.");
     			}
@@ -81,15 +80,23 @@ public class ScheRun {
     				}else {
     					scheView.printFail("수정 실패! 다시 시도해주세요.");
     				}
+    			}else {
+    				scheView.printFail("아이디를 찾을수 없어요.");
     			}
     			break;
     		case 7 : 
     			insertTitle = scheView.searchTitle("삭제");
-    			result = scheCon.deleteSche(insertTitle);
-    			if(result>0) {
-    				scheView.printSuccess("삭제가 완료됐어요");
+    			schedule = scheCon.printOneSche(insertTitle);
+    			if(schedule != null) {
+    				result = scheCon.deleteSche(insertTitle);
+    				if(result>0) {
+    					scheView.printSuccess("삭제가 완료됐어요");
+    				}else {
+    					scheView.printFail("삭제 실패! 다시 시도해주세요.");
+    				}
+    				
     			}else {
-    				scheView.printFail("삭제 실패! 다시 시도해주세요.");
+    				scheView.printFail("아이디를 찾을수 없어요.");
     			}
     			break;
     		case 8 : break exit; //줭료
@@ -98,22 +105,5 @@ public class ScheRun {
     			break;
     		}
     	}
-    		
-//    	System.out.println("---------심플스케줄러---------");
-//		System.out.println("1. 나의 전체 스케줄 보기");
-//		System.out.println("2. 날짜별 스케줄 보기");
-//		System.out.println("3. 『개인』스케줄만 보기");
-//		System.out.println("4. 『공식』스케줄만 보기");
-//		
-//		System.out.println("5. 새 일정 추가하기");
-//		System.out.println("6. 스케줄 수정하기");
-//		System.out.println("7. 스케줄 삭제하기");
-//		System.out.println("8. 스케줄러 종료");
-//		System.out.print("[메뉴선택] : ");
-    	
-    	
-    	
-    	
-    	
     }
 }
