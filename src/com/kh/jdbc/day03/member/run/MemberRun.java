@@ -14,6 +14,7 @@ public class MemberRun {
     	List<Member> mList = null;
     	String memberId = "";
     	String memberName = "";
+    	
     	exit: 
     	while(true) {
     		int choice = mView.mainMenu();
@@ -70,30 +71,37 @@ public class MemberRun {
     				mView.displayError("존재하지 않는 회원..");
     			}
     			break;
-    		case 6 : //삭제 성공메세지 나오는데 삭제가 안됨ㅋㅋㅋ
+    		case 6 : //삭제 성공메세지 나오는데 삭제가 안됨ㅋㅋㅋ-> 집에서 안됐느데 왜 갑자기 되지? 힝ㅠ
     			memberId = mView.searchMember("삭제할 계정의 아이디를 ");
-    			member = mCon.printOneById(memberId);
-    			if(member != null) {
-    				member = mView.deleteMember(memberId);
-    				result = mCon.deleteMember(memberId);
+//    			member = mCon.printOneById(memberId);
+    			result = mCon.deleteMember(memberId);
+//    			if(member != null) {
+//    				member = mView.deleteMember(memberId);
+//    				result = mCon.deleteMember(memberId);
     				if(result > 0) {
     					mView.displaySuccess("삭제성공!");
     				}else {
     					mView.displayError("삭제 실패!!");
     				}
-    			}else {
-    				mView.displayError("존재하지 않는 회원. . . ");
-    			}
+//    			}else {
+//    				mView.displayError("존재하지 않는 회원. . . ");
+//    			}
     			break;
     		case 7 : //로그인
-    			
+    			Member memberInfo = mView.inputLoginInfo();
+    			member = mCon.logIn(memberInfo);
+    			if(member != null) {
+    				mView.displaySuccess("로그인성공");
+    			}else {
+    				mView.displayError("로그인실패");
+    			}
     			break;
-    		}
+//    		}
     		
     		
     	}
     	
     	
-    	
+    	}
     }
 }

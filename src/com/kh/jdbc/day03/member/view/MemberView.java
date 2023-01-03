@@ -60,6 +60,12 @@ public class MemberView {
 		System.out.println("취미 : " + member.getMemberHobby());
 		System.out.println("가입날짜 : " + member.getMemberDate());
 	}
+	public String searchMember(String message) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println(message + " 입력해 주세요.");
+		String searchedStudent = sc.next();
+		return searchedStudent;
+	}
 	public Member inputMember() {
     	Scanner sc = new Scanner(System.in);
     	System.out.print("아이디 : ");
@@ -85,12 +91,7 @@ public class MemberView {
     	return member;
     }
     
-    public String searchMember(String message) {
-    	Scanner sc = new Scanner(System.in);
-    	System.out.println(message + " 입력해 주세요.");
-    	String searchedStudent = sc.next();
-    	return searchedStudent;
-    }
+    
     
 //    public Member inputLoginInfo(String memberId, String memberPwd) {
 //    	Scanner sc = new Scanner(System.in);
